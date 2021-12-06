@@ -5,6 +5,8 @@ void main(List<String> arguments) async {
   List<int> nums = await file
       .readAsLines()
       .then((value) => value.map((e) => int.parse(e)).toList());
+
+  part1(nums);
   part2(nums);
 }
 
