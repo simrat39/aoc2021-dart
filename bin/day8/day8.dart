@@ -38,7 +38,7 @@ void main(List<String> arguments) async {
     allNums.add(jumbledNums);
   }
 
-  /* part1(allPatterns, allNums); */
+  part1(allPatterns, allNums);
   part2(allPatterns, allNums);
 }
 
@@ -49,7 +49,7 @@ void part2(List<List<String>> patternsAll, List<List<String>> numsAll) {
   List<int> decodedNumbers = [];
 
   for (var i = 0; i < patternsAll.length; i++) {
-    Map<int, List<List<String>>> possibleRealValues = {
+    Map<int, List<String>> possibleRealValues = {
       0: [],
       1: [],
       2: [],
@@ -70,47 +70,47 @@ void part2(List<List<String>> patternsAll, List<List<String>> numsAll) {
     for (var p in curPatterns) {
       switch (p.length) {
         case 2:
-          possibleRealValues[1]!
-              .add(p.runes.map((e) => String.fromCharCode(e)).toList());
+          possibleRealValues[1] =
+              (p.runes.map((e) => String.fromCharCode(e)).toList());
           break;
         case 3:
-          possibleRealValues[7]!
-              .add(p.runes.map((e) => String.fromCharCode(e)).toList());
+          possibleRealValues[7] =
+              (p.runes.map((e) => String.fromCharCode(e)).toList());
           break;
         case 4:
-          possibleRealValues[4]!
-              .add(p.runes.map((e) => String.fromCharCode(e)).toList());
+          possibleRealValues[4] =
+              (p.runes.map((e) => String.fromCharCode(e)).toList());
           break;
         case 5:
-          possibleRealValues[2]!
-              .add(p.runes.map((e) => String.fromCharCode(e)).toList());
-          possibleRealValues[3]!
-              .add(p.runes.map((e) => String.fromCharCode(e)).toList());
-          possibleRealValues[5]!
-              .add(p.runes.map((e) => String.fromCharCode(e)).toList());
+          possibleRealValues[2] =
+              (p.runes.map((e) => String.fromCharCode(e)).toList());
+          possibleRealValues[3] =
+              (p.runes.map((e) => String.fromCharCode(e)).toList());
+          possibleRealValues[5] =
+              (p.runes.map((e) => String.fromCharCode(e)).toList());
           break;
         case 6:
-          possibleRealValues[0]!
-              .add(p.runes.map((e) => String.fromCharCode(e)).toList());
-          possibleRealValues[6]!
-              .add(p.runes.map((e) => String.fromCharCode(e)).toList());
-          possibleRealValues[9]!
-              .add(p.runes.map((e) => String.fromCharCode(e)).toList());
+          possibleRealValues[0] =
+              (p.runes.map((e) => String.fromCharCode(e)).toList());
+          possibleRealValues[6] =
+              (p.runes.map((e) => String.fromCharCode(e)).toList());
+          possibleRealValues[9] =
+              (p.runes.map((e) => String.fromCharCode(e)).toList());
           break;
         case 7:
-          possibleRealValues[8]!
-              .add(p.runes.map((e) => String.fromCharCode(e)).toList());
+          possibleRealValues[8] =
+              (p.runes.map((e) => String.fromCharCode(e)).toList());
           break;
       }
     }
 
-    deduction['a'] = possibleRealValues[7]![0]
-        .where((c) => !possibleRealValues[1]![0].contains(c))
+    deduction['a'] = possibleRealValues[7]!
+        .where((c) => !possibleRealValues[1]!.contains(c))
         .toList()[0];
 
-    var eOrG = possibleRealValues[8]![0]
-        .where((c) => !possibleRealValues[7]![0].contains(c))
-        .where((c) => !possibleRealValues[4]![0].contains(c))
+    var eOrG = possibleRealValues[8]!
+        .where((c) => !possibleRealValues[7]!.contains(c))
+        .where((c) => !possibleRealValues[4]!.contains(c))
         .toList();
 
     String twoExample = "";
@@ -129,17 +129,17 @@ void part2(List<List<String>> patternsAll, List<List<String>> numsAll) {
         .where((element) => !eOrG.contains(element))
         .toList();
 
-    deduction['f'] = possibleRealValues[1]![0]
+    deduction['f'] = possibleRealValues[1]!
         .where((element) => !dOrC.contains(element))
         .toList()
         .first;
 
-    deduction['c'] = possibleRealValues[1]![0]
+    deduction['c'] = possibleRealValues[1]!
         .where((element) => element != deduction['f'])
         .toList()
         .first;
 
-    var bOrd = possibleRealValues[8]![0]
+    var bOrd = possibleRealValues[8]!
         .where((element) => !deduction.values.contains(element))
         .where((element) => !eOrG.contains(element))
         .toList();
@@ -203,7 +203,6 @@ void part2(List<List<String>> patternsAll, List<List<String>> numsAll) {
     }
     decodedNumbers.add(int.parse(collectedNum));
   }
-  print(decodedNumbers);
   print(decodedNumbers.reduce((value, element) => value + element));
 }
 
