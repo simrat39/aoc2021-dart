@@ -45,38 +45,39 @@ void pretty(Heatmap map) {
   print("");
 }
 
-Heatmap getBasin(Heatmap map, Heatmap seen, Position current, Position last) {
+Heatmap getBasin(
+    Heatmap map, Heatmap basinMap, Position current, Position last) {
   if (current.y >= map.length ||
       current.y < 0 ||
       current.x < 0 ||
       current.x >= map[0].length) {
-    return seen;
+    return basinMap;
   }
 
-  if (seen[current.y][current.x] == -1) {
-    return seen;
+  if (basinMap[current.y][current.x] == -1) {
+    return basinMap;
   }
 
   if (map[current.y][current.x] == 9) {
-    return seen;
+    return basinMap;
   }
 
   if (map[current.y][current.x] < map[last.y][last.x]) {
-    return seen;
+    return basinMap;
   }
 
-  seen[current.y][current.x] = -1;
+  basinMap[current.y][current.x] = -1;
 
   // left
-  getBasin(map, seen, Position(current.x - 1, current.y), current);
+  getBasin(map, basinMap, Position(current.x - 1, current.y), current);
   // right
-  getBasin(map, seen, Position(current.x + 1, current.y), current);
+  getBasin(map, basinMap, Position(current.x + 1, current.y), current);
   // top
-  getBasin(map, seen, Position(current.x, current.y + 1), current);
+  getBasin(map, basinMap, Position(current.x, current.y + 1), current);
   // bottom
-  getBasin(map, seen, Position(current.x, current.y - 1), current);
+  getBasin(map, basinMap, Position(current.x, current.y - 1), current);
 
-  return seen;
+  return basinMap;
 }
 
 void part2(Heatmap data) {
