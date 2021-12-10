@@ -4,7 +4,7 @@ void main(List<String> arguments) async {
   var file = File("input.txt");
   var lines = await file.readAsLines();
 
-  /* part1(lines); */
+  part1(lines);
   part2(lines);
 }
 
@@ -67,27 +67,15 @@ void part2(List<String> lines) {
       }
     }
 
-    List<String> open = [];
-
     if (!isBroken) {
-      for (var char in line.getChars()) {
-        if (opposites.containsKey(char)) {
-          open.add(char);
-        } else if (closingOpposites.containsKey(char)) {
-          var opp = closingOpposites[char];
-          if (open.contains(opp) && open.last == opp) {
-            open.removeAt(open.lastIndexOf(opp!));
-          }
-        }
+      var score = openChunks.reversed
+          .map((e) => completionScoreMap[opposites[e]]!)
+          .fold(
+              0, (int previousValue, element) => (previousValue * 5) + element);
+
+      if (score != 0) {
+        allScores.add(score);
       }
-    }
-
-    var score = open.reversed
-        .map((e) => completionScoreMap[opposites[e]]!)
-        .fold(0, (int previousValue, element) => (previousValue * 5) + element);
-
-    if (score != 0) {
-      allScores.add(score);
     }
   }
 
